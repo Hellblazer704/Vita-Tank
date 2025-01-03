@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta ```html
+    charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twin - Tank Status</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Digital Twin - Storage Tank Status</h1>
+    <div id="tank-status">
+        <p>pH Level: <span id="ph"></span></p>
+        <p>Viscosity: <span id="viscosity"></span></p>
+        <p>Impurity Level: <span id="impurity"></span></p>
+        <p>Maintenance Needed: <span id="maintenance"></span></p>
+    </div>
+    <script>
+        function fetchTankStatus() {
+            $.getJSON('/api/tank_status', function(data) {
+                $('#ph').text(data.ph);
+                $('#viscosity').text(data.viscosity);
+                $('#impurity').text(data.impurity);
+                $('#maintenance').text(data.maintenance_needed ? 'Yes' : 'No');
+            });
+        }
+        setInterval(fetchTankStatus, 5000); // Fetch data every 5 seconds
+        fetchTankStatus(); // Initial fetch
+    </script>
+</body>
+</html>
